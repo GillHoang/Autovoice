@@ -1,0 +1,29 @@
+{
+  "name": "autovoice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "boxen": "^8.0.1",
+    "chalk": "^5.4.1",
+    "discord.js-selfbot-v13": "^3.6.1",
+    "figlet": "^1.8.1",
+    "inquirer": "^12.5.2",
+    "node-cron": "^3.0.3",
+    "ora": "^8.2.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.7.0",
+    "@types/node": "^22.14.1",
+    "@types/node-cron": "^3.0.11"
+  }
+}
