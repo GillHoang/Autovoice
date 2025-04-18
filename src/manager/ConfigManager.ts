@@ -1,23 +1,28 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Config, IConfigManager } from "../types";
+import { Config, Group, IConfigManager } from "../types";
 
 export class ConfigManager implements IConfigManager {
   private configPath: string;
 
-  constructor(configPath: string = path.join(__dirname, "..", "config.json")) {
+  constructor(configPath: string = path.join(process.cwd(), "config.json")) {
     this.configPath = configPath;
   }
 
   readConfig(): Config {
     try {
       if (!fs.existsSync(this.configPath)) {
-        return { accounts: [] };
+        return { accounts: [], groups: [] };
       }
-      return JSON.parse(fs.readFileSync(this.configPath, "utf8")) as Config;
+      const config = JSON.parse(fs.readFileSync(this.configPath, "utf8")) as Config;
+      // Ensure groups array exists
+      if (!config.groups) {
+        config.groups = [];
+      }
+      return config;
     } catch (error) {
       console.error("Lỗi khi đọc file cấu hình:", error);
-      return { accounts: [] };
+      return { accounts: [], groups: [] };
     }
   }
 

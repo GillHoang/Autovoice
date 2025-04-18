@@ -9,10 +9,18 @@ export interface Account {
   selfDeaf: boolean;
   selfVideo: boolean;
   name: string;
+  group?: string; // Thêm thuộc tính group để nhóm các tài khoản
+}
+
+export interface Group {
+  id: string;
+  name: string;
+  description?: string;
 }
 
 export interface Config {
   accounts: Account[];
+  groups: Group[];
 }
 
 export interface RunningClient {
@@ -36,6 +44,9 @@ export interface MainMenuAnswer {
     | "editAccount"
     | "deleteAccount"
     | "disconnectAll"
+    | "statusMonitor"
+    | "scheduleAccounts"
+    | "manageGroups"
     | "exit";
 }
 
@@ -89,6 +100,15 @@ export interface IAccountManager {
   updateAccount(index: number, account: Account): void;
   deleteAccount(index: number): void;
   getAccount(index: number): Account;
+  
+  // Group management methods
+  getGroups(): Group[];
+  addGroup(group: Omit<Group, 'id'>): Group;
+  updateGroup(groupId: string, groupData: Partial<Omit<Group, 'id'>>): Group | null;
+  deleteGroup(groupId: string): boolean;
+  assignAccountToGroup(accountIndex: number, groupId: string | undefined): boolean;
+  getAccountsByGroup(groupId: string): Account[];
+  getUngroupedAccounts(): Account[];
 }
 
 export interface IDiscordManager {

@@ -44,6 +44,7 @@ export class DiscordManager implements IDiscordManager {
           })
           .then(() => {
             this.ui.showSuccess(`Đã vào kênh voice: ${channel.name}`);
+            this.setupAutoReconnect(client, account);
           })
           .catch((error) => {
             this.ui.showError(`Lỗi khi vào kênh voice: ${error}`);
@@ -177,6 +178,40 @@ export class DiscordManager implements IDiscordManager {
       discordData.client.destroy();
       this.ui.showInfo('Đã đóng kết nối Discord');
     }
+  }
+
+  /**
+   * Enable auto-reconnect for an account
+   */
+  private setupAutoReconnect(client: Client, account: Account): void {
+    client.on('voiceStateUpdate', (oldState, newState) => {
+      // Check if this is our bot and it was disconnected from a voice channel
+      if (oldState.member?.user.id === client.user?.id && 
+          oldState.channelId && !newState.channelId) {
+        
+        this.ui.showWarning(`Tài khoản ${account.name} bị ngắt kết nối, đang thử kết nối lại...`);
+        
+        // Wait a moment before attempting to reconnect
+        setTimeout(async () => {
+          try {
+            const guild = client.guilds.cache.get(account.guildId);
+            const channel = guild?.channels.cache.get(account.channelId);
+            
+            if (guild && channel && channel instanceof VoiceChannel) {
+              await client.voice?.joinChannel(account.channelId, {
+                selfDeaf: account.selfDeaf,
+                selfMute: account.selfMute,
+                selfVideo: account.selfVideo
+              });
+              
+              this.ui.showSuccess(`Đã kết nối lại ${account.name} thành công!`);
+            }
+          } catch (error) {
+            this.ui.showError(`Không thể kết nối lại ${account.name}: ${error}`);
+          }
+        }, 5000);
+      }
+    });
   }
 }
 

@@ -3,17 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npx tsup ./src/ && node dist/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/gradient-string": "^1.1.6",
     "boxen": "^8.0.1",
     "chalk": "^5.4.1",
     "discord.js-selfbot-v13": "^3.6.1",
     "figlet": "^1.8.1",
+    "gradient-string": "^3.0.0",
     "inquirer": "^12.5.2",
     "node-cron": "^3.0.3",
     "ora": "^8.2.0",
