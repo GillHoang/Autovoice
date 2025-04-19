@@ -32,9 +32,20 @@ if not exist "node_modules\" (
     )
 )
 
-REM Run the bot using the dev script from package.json
+REM Check if TypeScript files need to be compiled
+if not exist "dist\" (
+    echo Compiling TypeScript files...
+    call npx tsc
+    if %ERRORLEVEL% neq 0 (
+        echo Failed to compile TypeScript files.
+        pause
+        exit /b 1
+    )
+)
+
+REM Run the bot using the dev script from package.json with garbage collection enabled
 echo Running Discord Autovoice Self Bot...
-call npm run dev
+node --expose-gc dist/index.js
 
 REM If the bot crashes, don't close the window immediately
 if %ERRORLEVEL% neq 0 (

@@ -66,6 +66,7 @@ export class UserInterface implements IUserInterface {
           { name: '🔌 Ngắt kết nối tất cả', value: 'disconnectAll' },
           { name: '📊 Bảng theo dõi trạng thái kết nối', value: 'statusMonitor' },
           { name: '⏰ Quản lý lịch kết nối tự động', value: 'scheduleAccounts' },
+          { name: '🔒 Cài đặt bảo mật', value: 'securitySettings' },
           { name: '🚪 Thoát', value: 'exit' }
         ],
         pageSize: 12
