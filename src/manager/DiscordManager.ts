@@ -214,16 +214,13 @@ export class DiscordManager implements IDiscordManager {
     }
 
     interface DiscordClientOptions {
-      checkUpdate?: boolean;
       autoRedeemNitro?: boolean;
       patchVoice?: boolean;
       ws?: ClientWebSocketOptions;
-      intents?: string[];
       sweepers?: ClientSweepersOptions;
     }
 
     const clientOptions: DiscordClientOptions = {
-      checkUpdate: false,
       autoRedeemNitro: false,
       patchVoice: true,
       // Use low resource settings if in low resource mode
@@ -234,7 +231,6 @@ export class DiscordManager implements IDiscordManager {
         large_threshold: this.isLowResourceMode ? 50 : 100, // Reduce guild member caching
       },
       // Disable unnecessary intents
-      intents: ["GUILDS", "GUILD_VOICE_STATES"],
       // Minimal sweeping and caching in low resource mode
       sweepers: this.isLowResourceMode
         ? {
